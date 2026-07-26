@@ -46,7 +46,8 @@ $callback_url = 'http://localhost/tmpay-callback.php';  // แก้ไข URL �
 - 55555555555556 = 1000 บาท
 
 ### 3. ทดสอบระบบ
-เปิดเบราว์เซอร์ไปที่ `http://localhost/index.php`
+เปิดเบราว์เซอร์ไปที่ `http://localhost/check-credit.php` ก่อนเพื่อสร้างฐานข้อมูล test
+จากนั้นทดสอบเติมเงิน `http://localhost/index.php`
 
 ## โครงสร้างฐานข้อมูล
 
