@@ -11,6 +11,7 @@ $db_user = 'root';
 $db_pass = '';
 
 // TMPAY Configuration
+// $merchant_id = 'TEST'; สำหรับทดสอบระบบ
 $merchant_id = 'YOUR_MERCHANT_ID'; // แก้ไขเป็น Merchant ID ของคุณ
 $callback_url = 'http://localhost/tmpay-callback.php'; // แก้ไข URL ให้ตรงกับเซิร์ฟเวอร์ของคุณ
 
