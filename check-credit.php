@@ -8,7 +8,7 @@ $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
 $stmt->execute([$user_id]);
 $user = $stmt->fetch();
 
-// ถ้าไม่มีผู้ใช้ให้สร้างใหม่
+// ถ้าไม่มีผู้ใช้ให้สร้างใหม่ สำหรับการทดสอบ
 if (!$user) {
     $stmt = $pdo->prepare("INSERT INTO users (id, username, credit) VALUES (?, ?, 0)");
     $stmt->execute([$user_id, 'test']);
@@ -19,7 +19,7 @@ if (!$user) {
     ];
 }
 
-// ดึงประวัติการเติมเงิน
+// ดึงประวัติการเติมเงิน จากฐานข้อมูล
 $stmt = $pdo->prepare("SELECT * FROM refill_log WHERE user_id = ? ORDER BY created_at DESC");
 $stmt->execute([$user_id]);
 $transactions = $stmt->fetchAll();
