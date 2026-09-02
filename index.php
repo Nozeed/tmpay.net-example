@@ -2,8 +2,8 @@
 require __DIR__ . '/db.php';
 require __DIR__ . '/tmpay-api.php';
 
-$message = '';
-$user_id = '1';
+$message = ''; // ข้อความที่แสดงผลลัพธ์
+$user_id = '1'; // รหัสผู้ใช้งานในฐานข้อมูล (สำหรับการทดสอบ)
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $card_code = $_POST['card_code'] ?? '';
