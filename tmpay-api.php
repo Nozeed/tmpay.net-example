@@ -7,6 +7,12 @@ require __DIR__ . '/db.php';
 function refill_tmpay($data, $user_id, $channel)
 {
     global $pdo, $merchant_id, $callback_url;
+
+    $allowed_channels = ['truemoney', 'razer_gold_pin'];
+    if (!in_array($channel, $allowed_channels, true)) {
+        return 'ช่องทางการชำระเงินไม่ถูกต้อง';
+    }
+
     $card_code = (string)($data['card_code'] ?? '');
     if (!preg_match('/^\d{14}$/', $card_code)) {
         return 'รหัสบัตรต้องเป็นตัวเลข 14 หลัก';
@@ -32,16 +38,24 @@ function refill_tmpay($data, $user_id, $channel)
         CURLOPT_SSL_VERIFYPEER => false,
         CURLOPT_TIMEOUT        => 15
     ]);
+    // ส่ง request ไป TMPAY แล้วรอรับข้อความตอบกลับ
     $response = curl_exec($ch);
     curl_close($ch);
 
-    if (strpos($response, 'SUCCEED') !== false) {
-        $trans_id = substr($response, 8);
+    // TMPAY ตอบกลับมาในรูปแบบ "SUCCEED|XYZ1234567"
+    // แยกข้อความด้วย | จะได้ array 2 ช่อง: [0] = "SUCCEED", [1] = "XYZ1234567"
+    $response_parts = explode('|', trim((string)$response));
+
+    // ถ้าสำเร็จ เอา Transaction ID (ช่องที่ 2) ไปบันทึกลงฐานข้อมูล
+    if (($response_parts[0] ?? '') === 'SUCCEED' && !empty($response_parts[1])) {
+        $trans_id = $response_parts[1];
+
         $stmt = $pdo->prepare("INSERT INTO refill_log (user_id, card_code, transaction_id, status, pay_type) VALUES (?, ?, ?, 0, ?)");
         $stmt->execute([(int)$user_id, $card_code, $trans_id, $channel]);
 
         return true;
     }
 
+    // ถ้าไม่สำเร็จ แสดงข้อความ error จาก TMPAY
     return 'เกิดข้อผิดพลาด: ' . htmlspecialchars((string)$response);
 }
