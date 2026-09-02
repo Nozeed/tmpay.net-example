@@ -42,13 +42,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input type="text" name="card_code" maxlength="14" pattern="\d{14}" required placeholder="กรอกเลขบัตร 14 หลัก">
         </p>
         
-        <p>
-            <label>ช่องทาง:</label><br>
-            <select name="channel" required>
-                <option value="truemoney">บัตร TrueMoney</option>
-                <option value="razer_gold_pin">Razer Gold Pin</option>
-            </select>
-        </p>
+        <fieldset>
+            <legend>ช่องทาง:</legend>
+            <p>
+                <label>
+                    <input type="radio" name="channel" value="truemoney" checked required>
+                    บัตร TrueMoney
+                </label>
+            </p>
+            <p>
+                <label>
+                    <input type="radio" name="channel" value="razer_gold_pin" required>
+                    Razer Gold Pin
+                </label>
+            </p>
+        </fieldset>
         
         <p>
             <input type="submit" value="เติมเงิน">
