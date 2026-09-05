@@ -30,3 +30,14 @@ CREATE TABLE IF NOT EXISTS refill_log (
 CREATE INDEX idx_card_code ON refill_log(card_code);
 CREATE INDEX idx_transaction_id ON refill_log(transaction_id);
 CREATE INDEX idx_user_id ON refill_log(user_id);
+
+-- ข้อมูลตัวอย่าง
+INSERT INTO users (id, username, credit) VALUES
+(1, 'test', 0),
+(2, 'test2', 500),
+(3, 'test3', 1200);
+
+INSERT INTO refill_log (user_id, card_code, transaction_id, amount, status, pay_type) VALUES
+(1, '12345678901234', 'TX10001', 50.00, 1, 'truemoney'),
+(1, '99999999999999', 'TX10002', 100.00, 2, 'truemoney'),
+(2, '88888888888888', 'TX10003', 500.00, 1, 'razer_gold_pin');
