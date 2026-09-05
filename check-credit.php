@@ -14,7 +14,7 @@ if (!$user) {
     $stmt->execute([$user_id, 'test']);
     $user = [
         'id' => $user_id,
-        'username' => 'test',
+        'username' => 'testuser',
         'credit' => 0
     ];
 }
@@ -25,47 +25,61 @@ $stmt->execute([$user_id]);
 $transactions = $stmt->fetchAll();
 
 // แปลงสถานะเป็นภาษาไทย
-function getStatusText($status) {
+function getStatusText($status)
+{
     switch ($status) {
-        case 0: return 'รอตรวจสอบ';
-        case 1: return 'สำเร็จ';
-        case 2: return 'ไม่สำเร็จ';
-        case 3: return 'รอตรวจสอบ';
-        default: return 'ไม่ระบุ';
+        case 0:
+            return 'รอตรวจสอบ';
+        case 1:
+            return 'สำเร็จ';
+        case 2:
+            return 'ไม่สำเร็จ';
+        case 3:
+            return 'รอตรวจสอบ';
+        default:
+            return 'ไม่ระบุ';
     }
 }
 
-function getStatusColor($status) {
+function getStatusColor($status)
+{
     switch ($status) {
-        case 0: return 'orange';
-        case 1: return 'green';
-        case 2: return 'red';
-        case 3: return 'orange';
-        default: return 'gray';
+        case 0:
+            return 'orange';
+        case 1:
+            return 'green';
+        case 2:
+            return 'red';
+        case 3:
+            return 'orange';
+        default:
+            return 'gray';
     }
 }
 ?>
 <!DOCTYPE html>
 <html lang="th">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ดูเครดิตและประวัติการเติมเงิน</title>
 </head>
+
 <body>
     <h1>ดูเครดิตและประวัติการเติมเงิน</h1>
-    
+
     <h2>ข้อมูลผู้ใช้</h2>
     <p>
         <strong>User ID:</strong> <?php echo htmlspecialchars($user['id']); ?><br>
         <strong>Username:</strong> <?php echo htmlspecialchars($user['username']); ?><br>
         <strong>เครดิต:</strong> <?php echo number_format($user['credit']); ?> บาท
     </p>
-    
+
     <hr>
-    
+
     <h2>ประวัติการเติมเงิน</h2>
-    
+
     <?php if (empty($transactions)): ?>
         <p>ยังไม่มีประวัติการเติมเงิน</p>
     <?php else: ?>
@@ -98,8 +112,9 @@ function getStatusColor($status) {
             </tbody>
         </table>
     <?php endif; ?>
-    
+
     <hr>
     <p><a href="index.php">กลับหน้าเติมเงิน</a></p>
 </body>
+
 </html>
